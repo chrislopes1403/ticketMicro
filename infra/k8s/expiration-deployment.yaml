@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: expiration-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: expiration
+  template:
+    metadata:
+      labels:
+        app: expiration
+    spec:
+      containers:
+        - name: expiration
+          image: us.gcr.io/react-micro-308901/expiration
+          env:
+            - name: REDIS_HOST
+              value: expiration-redis-service
+            - name: NATS_SERVICE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: nats-configmap
+                  key: nats-service-url
+            - name: NATS_TICKET_CLUSTER_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: nats-configmap
+                  key: nats-ticket-cluster-id
+            - name: NATS_TICKET_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name # pod id

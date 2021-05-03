@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client
+  template:
+    metadata:
+      labels:
+        app: client
+    spec:
+      containers:
+        - name: client
+          image: us.gcr.io/react-micro-308901/client
+          env:
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: main-secret
+                  key: JWT_KEY_SECRET
+            - name: NEXT_PUBLIC_STRIPE_KEY_PUBLIC
+              valueFrom:
+                secretKeyRef:
+                  name: main-secret
+                  key: STRIPE_KEY_PUBLIC
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: client-service
+spec:
+  selector:
+    app: client
+  ports:
+    - name: client
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
