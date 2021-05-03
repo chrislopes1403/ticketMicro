@@ -67,7 +67,7 @@ const mongooseConnection = async ()=>
 
 };
 app.listen(3000,()=>{
-    console.log('Orders Server on port 3000 !!!!!');
+    console.log('Orders Server on port 3000 !!');
 });
 
 
