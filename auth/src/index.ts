@@ -28,7 +28,11 @@ const mongooseConnection = async ()=>
 
 };
 app.listen(3000,()=>{
+<<<<<<< HEAD
     console.log('Auth Server on port 3000 !!');
+=======
+    console.log('Auth Server on port 3000 !!!!!!!');
+>>>>>>> 76200c5... change
 });
 
 
