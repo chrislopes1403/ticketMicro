@@ -5,7 +5,8 @@ const LandingPage = ({currentUser,tickets}) =>
 {
     const ticketList = tickets.map((ticket)=>{
         return(
-            <tr key={ticket.id}>
+            <tr  key={ticket.id}>
+                <th scope="row">{ticket.id}</th>
                 <td>{ticket.title}</td>
                 <td>{ticket.price}</td>
                 <td>
@@ -19,14 +20,15 @@ const LandingPage = ({currentUser,tickets}) =>
     });
     
     return( 
-    <div>
+    <div >
         <h1>Tickets</h1>
-        <table>
+        <table className="table table-striped">
             <thead>
                 <tr>
-                    <th>Title</th>
-                    <th>Price</th>
-                    <th>Link</th>
+                    <th scope="col">Id</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Price</th>
+                    <th scope="col"> Link</th>
                 </tr>
             </thead>
             <tbody>

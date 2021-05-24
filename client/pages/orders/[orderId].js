@@ -28,21 +28,42 @@ const OrderShow = ({ order, currentUser }) => {
       };
     }, [order]);
   
-    if (timeLeft < 0) {
-      return <div>Order Expired</div>;
+   
+    const renderTimeToPay = () =>
+    {
+      return (<div className="d-flex flex-column justify-content-between align-items-center">
+                <h3>Time left to pay: {timeLeft} seconds</h3>
+                <StripeCheckout
+                  token={({ id }) => doRequest({ token: id })}
+                  stripeKey={process.env.NEXT_PUBLIC_STRIPE_KEY_PUBLIC}
+                  amount={order.ticket.price * 100}
+                  email={currentUser.email}
+                />
+            </div>
+      );
     }
-  
+
+
+    const renderOrderExpired =() =>{
+     return <div>Order Expired</div>
+    }
+    const format_price = parseFloat(order.ticket.price).toFixed(2);
+
     return (
-      <div>
-        Time left to pay: {timeLeft} seconds
-        <StripeCheckout
-          token={({ id }) => doRequest({ token: id })}
-          stripeKey={process.env.NEXT_PUBLIC_STRIPE_KEY_PUBLIC}
-          amount={order.ticket.price * 100}
-          email={currentUser.email}
-        />
-        {errors}
+      <div className="d-flex justify-content-center mt-3">
+
+      <div className="card" style={{width: "18rem;"}}>
+        <div className="card-body d-flex flex-column justify-content-between align-items-center">
+          <h4 className="card-title">{order.ticket.title}</h4>
+          <h3 className="card-subtitle mb-2 text-muted">${format_price}</h3>
+         
+          {timeLeft > 0 ? renderTimeToPay() : renderOrderExpired() }
+
+          {errors}
+        </div>
       </div>
+    
+    </div>
     );
   };
   
@@ -54,4 +75,3 @@ const OrderShow = ({ order, currentUser }) => {
   };
   
   export default OrderShow;
-  

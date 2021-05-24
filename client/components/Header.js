@@ -19,17 +19,23 @@ const Header = ({currentUser}) =>
                 </li>
      });
 
+ 
+     const lg = 'linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(94,94,245,1) 0%, rgba(0,212,255,1) 43%)';
 
     return (
-        <nav className="navbar navbar-light bg-light">
-            <Link href="/">
-                TickerMasters
-            </Link> 
+        <nav className="navbar navbar-light bg-light" style={{background:lg}}>
+             <div className="container">
+                <Link href="/" >
+                    <a class="navbar-brand" href="/" style={{color:'white'}}>
+                    TickerMasters
+                    </a>
+                </Link> 
 
-            <div className="d-fex justify-content-end">
-                <ul className="nav d-flex align-items-center">
-                    {links}
-                </ul>
+                <div className="d-fex justify-content-end">
+                    <ul className="nav d-flex align-items-center">
+                        {links}
+                    </ul>
+                </div>
             </div>
         </nav>
     );

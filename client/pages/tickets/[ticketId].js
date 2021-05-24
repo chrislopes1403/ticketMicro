@@ -12,15 +12,24 @@ const TicketShow = ({ ticket }) => {
         Router.push('/orders/[orderId]', `/orders/${order.id}`),
     });
   
+
+    const format_price = parseFloat(ticket.price).toFixed(2);
+
     return (
-      <div>
-        <h1>{ticket.title}</h1>
-        <h4>Price: {ticket.price}</h4>
-        {errors}
-        <button onClick={() => doRequest()} className="btn btn-primary">
-          Purchase
-        </button>
+    <div className="d-flex justify-content-center mt-3">
+
+      <div className="card" style={{width: "18rem",height:"20rem"}}>
+        <div className="card-body d-flex flex-column justify-content-between align-items-center">
+          <h4 className="card-title">{ticket.title}</h4>
+          <h2 className="card-subtitle mb-2 text-muted">${format_price}</h2>
+          {errors}
+          <button onClick={() => doRequest()} className="btn btn-lg btn-primary">
+            Purchase
+          </button>
+        </div>
       </div>
+
+    </div>
     );
   };
   
