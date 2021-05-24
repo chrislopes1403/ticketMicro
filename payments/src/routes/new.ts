@@ -15,7 +15,6 @@ import {natsWrapper} from './../nats-wrapper';
 import {PaymentCreatedPublisher} from './../events/publishers/payment-created-publisher';
 const router = express.Router();
 
-
 router.post(
   '/api/payments',
   requireAuth,
@@ -35,13 +34,12 @@ router.post(
     if (order.status === OrderStatus.Cancelled) {
       throw new BadRequestError('Cannot pay for an cancelled order');
     }
-
+    
     const charge = await stripe.charges.create({
       currency: 'usd',
       amount: order.price * 100,
       source: token,
     });
-    console.log(charge);
     const payment = Payment.build({
       orderId,
       stripeId: charge.id,
@@ -56,5 +54,6 @@ router.post(
     res.status(201).send({ id: payment.id });
   }
 );
+
 
 export { router as createChargeRouter };

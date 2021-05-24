@@ -13,15 +13,34 @@ const Header = ({currentUser}) =>
      .map(({label,href})=>{
         
         return <li className="nav-item p-1" key={href}>
-                    <Link href={href}>
+                    <Link href={href} >
                         {label}
                     </Link> 
                 </li>
      });
 
+     const linearGradient = `linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(94,94,245,1) 0%, rgba(0,212,255,1) 43%)`;
 
-    return (
-        <nav className="navbar navbar-light bg-light">
+    return (<nav className="navbar " style={{color:'white', background:linearGradient}}>
+                <div className="container-md">
+                    <Link href="/">
+                        <a className="navbar-brand" href="/"  style={{color:'white'}}>
+                            TickerMasters
+                        </a>
+                    </Link> 
+                    <div className="d-flex justify-content-end">
+                        <ul className="nav d-flex align-items-center">
+                            {links}
+                        </ul>
+                    </div>
+                </div>    
+        </nav>);
+
+}
+
+export default Header;
+
+/* <nav className="navbar navbar-light bg-light" styles={{backgroundColor:'#7A43B6',color:'red'}}>
             <Link href="/">
                 TickerMasters
             </Link> 
@@ -31,9 +50,4 @@ const Header = ({currentUser}) =>
                     {links}
                 </ul>
             </div>
-        </nav>
-    );
-
-}
-
-export default Header;
+        </nav>*/

@@ -9,8 +9,7 @@ const router = express.Router();
 
 
 router.post('/api/users/signin',[
-    body('email')
-    .isEmail()
+    body('email').isEmail()
     .withMessage('Must be valid email'),
 body('password')
     .trim()

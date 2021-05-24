@@ -27,23 +27,44 @@ const OrderShow = ({ order, currentUser }) => {
         clearInterval(timerId);
       };
     }, [order]);
-  
-    if (timeLeft < 0) {
-      return <div>Order Expired</div>;
+
+
+
+    const renderTimeLeftToPay = () =>{
+      return(
+        <div>     
+          <h5 className="card-subtitle mb-2 text-muted text-center"> Time left to pay: {timeLeft} seconds</h5>
+           <StripeCheckout
+            token={({ id }) => doRequest({ token: id })}
+            stripeKey={process.env.NEXT_PUBLIC_STRIPE_KEY_PUBLIC}
+            amount={order.ticket.price * 100}
+            email={currentUser.email}
+          />
+        </div>
+      );
     }
+
+    const renderOrderExpired = () =>{
+      return <h5 className="card-subtitle mb-2 text-muted text-center">Order Expired</h5>
+    }
+
+
   
+    
     return (
-      <div>
-        Time left to pay: {timeLeft} seconds
-        <StripeCheckout
-          token={({ id }) => doRequest({ token: id })}
-          stripeKey={process.env.NEXT_PUBLIC_STRIPE_KEY_PUBLIC}
-          amount={order.ticket.price * 100}
-          email={currentUser.email}
-        />
-        {errors}
-      </div>
-    );
+      <div className="d-flex justify-content-center">
+
+      <div className="card mt-3" style={{width: "18rem", height:"15rem"}}>
+         <div className="card-body d-flex flex-column justify-content-between  align-items-center">
+           <h4 className="card-title text-center">{order.ticket.title}</h4>
+            {timeLeft > 0 ? renderTimeLeftToPay : renderOrderExpired }
+         </div>
+         {errors}
+
+       </div>
+
+    </div>
+    ); 
   };
   
   OrderShow.getInitialProps = async (context, client) => {
@@ -54,4 +75,3 @@ const OrderShow = ({ order, currentUser }) => {
   };
   
   export default OrderShow;
-  
