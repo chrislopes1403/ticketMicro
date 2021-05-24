@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: nats-configmap
-data:
-  nats-service-url: http://nats-service:4222
-  nats-ticket-cluster-id: ticketing
